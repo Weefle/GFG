@@ -30,13 +30,15 @@ class Dispatcher{
 			myIO.ecrireEcran("3) Round Robin");
 			myIO.ecrireEcran("4) Round Robin avec priorites");
 
-			if(myIO.lireEcran().equals("1")){
+			String lecteur = myIO.lireEcran();
+
+			if(lecteur.equals("1")){
 				new Algorithme("FIFO", allP);
-			}else if(myIO.lireEcran().equals("2")){
+			}else if(lecteur.equals("2")){
 				new Algorithme("FIFO_", allP);
-			}else if(myIO.lireEcran().equals("3")){
+			}else if(lecteur.equals("3")){
 				new Algorithme("ROUND", allP);
-			}else if(myIO.lireEcran().equals("4")){
+			}else if(lecteur.equals("4")){
 				new Algorithme("ROUND_", allP);
 			}
 

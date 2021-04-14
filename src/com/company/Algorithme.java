@@ -93,6 +93,60 @@ public class Algorithme {
 
         }else if(type.equals("FIFO_")){
 
+            while (run) {
+
+                if(pr_actif!=null){
+
+                    pr_actif.elapsed_time++;
+
+                }
+
+                for (Processus p : pro) {
+
+
+                    if (p.arrive_t == time) {
+                        if (pr_actif == null) {
+                            p.isRunning = true;
+                            pr_actif = p;
+                        }else{
+                            p.activable = true;
+                        }
+
+                        msg = msg.concat(time + getSpace(8-String.valueOf(time).length()));
+
+                        for (Processus pp : pro) {
+
+                            String ss = stateToString(pp);
+                            msg = msg.concat(ss + getSpace(9-ss.length()));
+
+                        }
+                        msg = msg.concat("\n");
+                    }
+                    assert pr_actif != null;
+                    if(pr_actif.remain_t == pr_actif.elapsed_time){
+                        pr_actif.isRunning = false;
+                        pr_actif.activable = false;
+                        pr_actif.just_finished = true;
+                        if(!processAvailable(pro)){
+                            msg = msg.concat(time + getSpace(8-String.valueOf(time).length()));
+                            msg = msg.concat(setMessage(pro));
+                            pr_actif = null;
+                            break;
+                        }
+                        msg = msg.concat(time + getSpace(8-String.valueOf(time).length()));
+                        msg = msg.concat(setMessage(pro));
+                    }
+
+                }
+
+                time++;
+
+                if(pr_actif==null){
+                    run = false;
+                }
+
+            }
+
         }else if(type.equals("ROUND")){
 
         }else if(type.equals("ROUND_")){
