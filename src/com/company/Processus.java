@@ -1,4 +1,4 @@
-package com.company;//package esiee.codejava.io;
+package com.company;
 //Nomprocessus	DateArrive	DureeExecution	DateDebutIO	DureeIO	Priorite
 
 import java.util.Comparator;

@@ -17,9 +17,10 @@ class Dispatcher{
 		String head="";
 		IOCommandes myIO=new IOCommandes();
 		
-		if(args.length!=1)
+		if(args.length!=1){
 			myIO.ecrireEcran("Nombre d'arguments incorrects !\nEntrez le nom du ficher des processus à traiter :)");
-		else {
+
+		} else {
 			myIO.ecrireEcran("\n");
 			myIO.ecrireEcran("********************* Welcome to our DISPATCHER Menu *********************");
 			myIO.ecrireEcran("\n");
@@ -35,9 +36,7 @@ class Dispatcher{
 
 
 			pro.sort((o1, o2) -> (int) (o1.arrive_t - o2.arrive_t));
-
-
-			//la suite à partir d'ici ...
+			
 			myIO.ecrireEcran("---------------Traitement :)---------------\n\n");
 
 
@@ -54,8 +53,6 @@ class Dispatcher{
 			int time = findFirstExecutionTime(process);
 
 			while (run) {
-
-				//System.out.println(time);
 
 				if(pr_actif!=null){
 
@@ -136,7 +133,6 @@ class Dispatcher{
 		for (Processus prc : pro) {
 
 			if(!prc.isRunning && prc.activable && !stop){
-				//System.out.println(prc.nameProc);
 				pr_actif = prc;
 				pr_actif.activable = false;
 				pr_actif.isRunning = true;
@@ -152,9 +148,8 @@ class Dispatcher{
 
 	public static boolean processAvailable(ArrayList<Processus> ps)
 	{
-		for(int i = 0 ; i < ps.size() ; i++)
-		{
-			if(ps.get(i).activable)return true;
+		for (Processus p : ps) {
+			if (p.activable) return true;
 		}
 
 		return false;
@@ -181,12 +176,12 @@ class Dispatcher{
 
 	static String getSpace(int nb)
 	{
-		String line = "";
+		StringBuilder line = new StringBuilder();
 		for(int i = 0 ; i < nb ; i++)
 		{
-			line += " ";
+			line.append(" ");
 		}
-		return line;
+		return line.toString();
 	}
 	 
 	

@@ -1,14 +1,9 @@
-package com.company;//package esiee.codejava.io;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.BufferedWriter;
-import java.io.BufferedReader;
-import java.io.PrintStream;
-import java.io.InputStreamReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.FileNotFoundException;
-import java.util.regex.*;
+package com.company;
+
+import java.io.*;
+import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 class IOCommandes{
@@ -67,7 +62,6 @@ class IOCommandes{
 			try {
 				String line=lineBuff.readLine();
 				while (line !=null){
-					//ecrireEcran(line);
 					textF=textF+line+"\n";				
 					line=lineBuff.readLine();
 				}	
@@ -76,7 +70,6 @@ class IOCommandes{
 	          e.printStackTrace();
 	        }
 		}catch (FileNotFoundException e){
-	          //e.printStackTrace();
 			  ecrireEcran("Fichier intouvable !\n");
 	        }
 		return textF;		
@@ -109,7 +102,6 @@ class IOCommandes{
 		int i=0;
 		for( i = 0; i < NB; i++)
 		{
-			//io.ecrireEcran(lines[i+1] + "\n");
 			String [] splitArray=lines[i+1].split("\t");
 		
 			process[i]= new Processus(splitArray[0], Float.parseFloat(splitArray[1]), Float.parseFloat(splitArray[2]), Float.parseFloat(splitArray[3]), Float.parseFloat(splitArray[4]), Integer.parseInt(splitArray[5]), false, false, 0);
@@ -143,7 +135,7 @@ class IOCommandes{
 			if(file.isDirectory()){
 				
 				listeFiles=file.list();
-				for (i=0; i<listeFiles.length; i++){
+				for (i=0; i< Objects.requireNonNull(listeFiles).length; i++){
 					int indice=i+1;
 					ecrireEcran(indice+" "+listeFiles[i]+"\n");					
 				}				
