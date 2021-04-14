@@ -113,6 +113,7 @@ public class Algorithme {
                                 p.activable = true;
                         }
 
+
                         if(pr_actif.priority_l > p.priority_l) {
                             p.isRunning = true;
                             pr_actif = p;
