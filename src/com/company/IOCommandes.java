@@ -104,7 +104,7 @@ class IOCommandes{
 		{
 			String [] splitArray=lines[i+1].split("\t");
 		
-			process[i]= new Processus(splitArray[0], Float.parseFloat(splitArray[1]), Float.parseFloat(splitArray[2]), Float.parseFloat(splitArray[3]), Float.parseFloat(splitArray[4]), Integer.parseInt(splitArray[5]), false, false, 0);
+			process[i]= new Processus(splitArray[0], Float.parseFloat(splitArray[1]), Float.parseFloat(splitArray[2]), Float.parseFloat(splitArray[3]), Float.parseFloat(splitArray[4]), Integer.parseInt(splitArray[5]));
 
 		}
 		return process;

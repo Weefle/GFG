@@ -33,7 +33,7 @@ public class Algorithme {
 
 
         boolean run = true;
-        int time = findFirstExecutionTime(process);
+        int time = findFirst(process);
 
         if(type.equals("FIFO")){
 
@@ -56,12 +56,12 @@ public class Algorithme {
                             p.activable = true;
                         }
 
-                        msg = msg.concat(time + getSpace(8-String.valueOf(time).length()));
+                        msg = msg.concat(time + addSpace(8-String.valueOf(time).length()));
 
                         for (Processus pp : pro) {
 
                             String ss = stateToString(pp);
-                            msg = msg.concat(ss + getSpace(9-ss.length()));
+                            msg = msg.concat(ss + addSpace(9-ss.length()));
 
                         }
                         msg = msg.concat("\n");
@@ -72,12 +72,12 @@ public class Algorithme {
                         pr_actif.activable = false;
                         pr_actif.just_finished = true;
                         if(!processAvailable(pro)){
-                            msg = msg.concat(time + getSpace(8-String.valueOf(time).length()));
+                            msg = msg.concat(time + addSpace(8-String.valueOf(time).length()));
                             msg = msg.concat(setMessage(pro));
                             pr_actif = null;
                             break;
                         }
-                        msg = msg.concat(time + getSpace(8-String.valueOf(time).length()));
+                        msg = msg.concat(time + addSpace(8-String.valueOf(time).length()));
                         msg = msg.concat(setMessage(pro));
                     }
 
@@ -97,6 +97,7 @@ public class Algorithme {
 
                 if(pr_actif!=null){
 
+                    if(pr_actif.isRunning)
                     pr_actif.elapsed_time++;
 
                 }
@@ -109,15 +110,20 @@ public class Algorithme {
                             p.isRunning = true;
                             pr_actif = p;
                         }else{
-                            p.activable = true;
+                                p.activable = true;
                         }
 
-                        msg = msg.concat(time + getSpace(8-String.valueOf(time).length()));
+                        if(pr_actif.priority_l > p.priority_l) {
+                            p.isRunning = true;
+                            pr_actif = p;
+                        }
+
+                        msg = msg.concat(time + addSpace(8-String.valueOf(time).length()));
 
                         for (Processus pp : pro) {
 
                             String ss = stateToString(pp);
-                            msg = msg.concat(ss + getSpace(9-ss.length()));
+                            msg = msg.concat(ss + addSpace(9-ss.length()));
 
                         }
                         msg = msg.concat("\n");
@@ -127,13 +133,14 @@ public class Algorithme {
                         pr_actif.isRunning = false;
                         pr_actif.activable = false;
                         pr_actif.just_finished = true;
+                        System.out.println(pr_actif.nameProc);
                         if(!processAvailable(pro)){
-                            msg = msg.concat(time + getSpace(8-String.valueOf(time).length()));
+                            msg = msg.concat(time + addSpace(8-String.valueOf(time).length()));
                             msg = msg.concat(setMessage(pro));
                             pr_actif = null;
                             break;
                         }
-                        msg = msg.concat(time + getSpace(8-String.valueOf(time).length()));
+                        msg = msg.concat(time + addSpace(8-String.valueOf(time).length()));
                         msg = msg.concat(setMessage(pro));
                     }
 
@@ -158,13 +165,12 @@ public class Algorithme {
         myIO.ecrireEcran(msg);
 
     }
-    static int findFirstExecutionTime(Processus[] ps)
+    static int findFirst(Processus[] ps)
     {
         int min = (int) ps[0].arrive_t;
 
-        for(int i = 0 ; i < ps.length ; i++)
-        {
-            if(ps[i].arrive_t < min) min = (int) ps[i].arrive_t;
+        for (Processus p : ps) {
+            if (p.arrive_t < min) min = (int) p.arrive_t;
         }
 
         return min;
@@ -175,14 +181,17 @@ public class Algorithme {
         String msg = "";
         for (Processus prc : pro) {
 
-            if(!prc.isRunning && prc.activable && !stop){
+           if(!prc.isRunning && prc.activable && !stop){
                 pr_actif = prc;
                 pr_actif.activable = false;
                 pr_actif.isRunning = true;
                 stop = true;
-            }
+            }else{
+               prc.isRunning = false;
+           }
+
             String s = stateToString(prc);
-            msg = msg.concat(s + getSpace(9-s.length()));
+            msg = msg.concat(s + addSpace(9-s.length()));
         }
         msg = msg.concat("\n");
         return msg;
@@ -192,7 +201,10 @@ public class Algorithme {
     public static boolean processAvailable(ArrayList<Processus> ps)
     {
         for (Processus p : ps) {
-            if (p.activable) return true;
+            if (p.activable){
+                System.out.println("->" + p.nameProc);
+                return true;
+            }
         }
 
         return false;
@@ -200,7 +212,8 @@ public class Algorithme {
 
     public static String stateToString(Processus prg){
 
-        String msge="";
+        String msge;
+
 
         if(prg.just_finished){
             msge = "A(" + prg.elapsed_time + ")";
@@ -217,7 +230,7 @@ public class Algorithme {
 
     }
 
-    static String getSpace(int nb)
+    static String addSpace(int nb)
     {
         StringBuilder line = new StringBuilder();
         for(int i = 0 ; i < nb ; i++)

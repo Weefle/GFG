@@ -17,16 +17,16 @@ class Processus implements Comparable<Processus>{
 		boolean just_finished;
 		
 		
-		Processus(String name, float ar, float rt, float iot, float iolast, int prio, boolean activ, boolean running, int elapsed){
+		Processus(String name, float ar, float rt, float iot, float iolast, int prio){
 			nameProc=name;
 			arrive_t=ar;
 			remain_t=rt;
 			ioAt_t=iot;
 			ioLastF_t=iolast;
 			priority_l=prio;
-			activable=activ;
-			isRunning=running;
-			elapsed_time = elapsed;
+			activable=false;
+			isRunning=false;
+			elapsed_time = 0;
 			just_finished = false;
 		}
 
